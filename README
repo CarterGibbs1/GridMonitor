@@ -1,0 +1,103 @@
+****************
+* Project 1/Grid Monitor: Avoiding an Unscheduled Space Walk
+* CS 221-004
+* 9/17/21
+* Carter Gibbs
+**************** 
+
+OVERVIEW:
+
+GridMonitor is a class that implements GridMonitorInterface. Its purpose is to create a constructor of GridMonitor
+that can read a file and produce data about starship cells and analyze the data to determine if the cell is in danger. 
+
+
+INCLUDED FILES:
+
+ * GridMonitor.java - This is the class/code the student produced. Its intended purpose is to be tested
+	upon by the other required files
+ * GridMonitorInterface.java - This is an interface that is required for a class the can read in 2D arrays (grid)
+	and determine cells dangerous values relative to their location
+ * GridMonitorTests.java - A unit test class for implementations of the GridMonitor interface.
+ * RunGridMonitorTests.java - Runs a set of black box tests that should work for any implementation of GridMonitor interface.
+ * Test_basics.java - Tests whether GridMonitor constructor works, implements interface, and doesn't throw a FileNotFoundException.  
+ * Test_negatives.java - Tests on "negatives.txt" file. 
+ * Test_oneByOne.java - Tests on "oneByOne.txt" file.
+ * Test_sample.java - Tests on "sample.txt" file. 
+ * Test_sample4x5.java - Tests on "sample4x5.txt" file. 
+ * Test_sampleDoubles.java - Tests on "sampleDoubles.txt" file.
+ * Test_wideRange.java - Tests on "wideRange.txt" file.
+ * negatives.txt - text file that consists of negative values.
+ * oneByOne.txt - text file that consists of a 1x1 grid
+ * sample.txt - text file that consists of default/regular values.
+ * sample4x5.txt - text file that consists of regular values in a 4x5 grid.
+ * sampleDoubles.txt - text file that consists of regular double values
+ * wideRange.txt - text file that consists of a wide range of values.
+ * README - Gives an overview of what the project does/what is needed/and any additional information.
+
+
+COMPILING AND RUNNING:
+
+ From the directory containing all source files, compile the
+ driver class (and all dependencies) with the command:
+ $ javac RunGridMonitorTests.java
+
+ Run the compiled class file with the command:
+ $ java RunGridMonitorTests
+
+ Console output will give the results after the program finishes.
+
+
+PROGRAM DESIGN AND IMPORTANT CONCEPTS:
+
+ The main concept of the GridMonitor program is to open a file, read in data from the file,
+ analyze the data, then spit out that data using accessor methods. The constructor of the program
+ will first read in the file, then fill in private array fields that resembles the "spaceship cell grid".
+ The readFile(String) will create a Scanner that can read in the .txt files, then grab the amount of rows
+ and columns and create an array to house the data. The Scanner will keep reading the file as long as there
+ is another token/line for the Scanner to read. It will assign the data to the private array field baseGrid[][].
+ 
+ The fillInGrid() will instantiate three double[][] and one boolean[][]. After it will run a nested for-loop
+ that will run through every element in the array to calculate the surround cells, calculate the averages of
+ the surrounding cells, calculate the deltas of the cell, then determine if the individual cells are in danger.
+ 
+ The surrounding cells of an individual are added together and assigned to that index of the array. The average
+ is calculated by dividing each element in the surrounding cell array by four. The delta is calculated by
+ taking 50% of the average cell array. And to determine if the cell is in danger, the program will take the
+ individual elements of the baseGrid[][] and compare them to the surrounding cell average[][] +- delta. This will
+ produce a range for the individual cells. If the individual cell from baseGrid[][] is greater or less than that
+ range, it is in danger.
+
+ The RunGridMonitorTests class will run through all of the tests and feed in the file names for the GridMonitor class
+ to run through. Then it will feed the results into other classes to determine if the GridMonitor class is working
+ correctly.
+
+ The GridMonitorInterface will initialize accessor methods for the other classes that implement it to define.
+
+ GridMonitorTests provides/runs the tests for RunGridMonitorTests. It will feed the results into RunGridMonitorTests.
+ Then the results are outputed from RunGridMonitorTests.
+
+ The individual tests are given by the "Test_..." classes.
+
+TESTING:
+
+ The program was tested with RunGridMonitorTests. The program would output if the GridMonitor code was working or
+ not. The RunGridMonitorTests would run through specified tests in a list. These tests were initialized by the GridMonitorTests
+ program. This class would call the GridMonitor constructor and run the tests. The test "instructions" are given by the "Test_..."
+ classes. The program will catch any FileNotFoundExceptions but not produce anything to the console. The tests that were run were
+ three sample data files, one file with wide ranges of data, and a negative numbers text file. No known issues/bugs remaining in the
+ program. The program should be able to handle weird data. It was run against a lot of odd data so any other odd data can be used to
+ refine the code.
+
+DISCUSSION:
+
+ I had difficulty using throws FileNotFoundException. I did not understand how the catch block worked but eventually I
+ figured it out. I had to learn through trial and error because I needed to catch the error in the constructor and not the readFile().
+ Another issue I had was eclipse was listing an issue of "Scanner not closed". Did not know what that meant but it recommended to
+ Suppress the Warning. The calculateDanger() had an issue where it wouldn't output the proper results for the test. I eventually had to
+ find the absolute value of the range calculation and determine if the absolute value of the baseGrid elements were in those ranges.
+
+ I couldn't understand how to add up all of the surrounding cells on an individual cell. I eventually decided to work on everything else
+ but that part. After programming as much as I could, I slept on the thought of how to do it. I woke up the next morning and it "clicked"
+ to get the values of the top, bottom, left, and right cells in individual methods rather than try to do it in one method.
+
+----------------------------------------------------------------------------
